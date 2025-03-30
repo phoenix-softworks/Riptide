@@ -24,13 +24,13 @@ namespace Riptide.Utils
         /// <remarks>Zig zag encoding allows small negative numbers to be represented as small positive numbers. All positive numbers are doubled and become even numbers,
         /// while all negative numbers become positive odd numbers. In contrast, simply casting a negative value to its unsigned counterpart would result in a large positive
         /// number which uses the high bit, rendering compression via <see cref="Message.AddVarULong(ulong)"/> and <see cref="Message.GetVarULong"/> ineffective.</remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static int ZigZagEncode(int value)
         {
             return (value >> 31) ^ (value << 1);
         }
         /// <inheritdoc cref="ZigZagEncode(int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static long ZigZagEncode(long value)
         {
             return (value >> 63) ^ (value << 1);
@@ -40,13 +40,13 @@ namespace Riptide.Utils
         /// <param name="value">The value to decode.</param>
         /// <returns>The zig zag-decoded value.</returns>
         /// <inheritdoc cref="ZigZagEncode(int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static int ZigZagDecode(int value)
         {
             return (value >> 1) ^ -(value & 1);
         }
         /// <inheritdoc cref="ZigZagDecode(int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static long ZigZagDecode(long value)
         {
             return (value >> 1) ^ -(value & 1);
@@ -59,7 +59,7 @@ namespace Riptide.Utils
         /// <param name="amount">The number of bits to write.</param>
         /// <param name="array">The array to write the bits into.</param>
         /// <param name="startBit">The bit position in the array at which to start writing.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void SetBits(byte bitfield, int amount, byte[] array, int startBit)
         {
             byte mask = (byte)((1 << amount) - 1);
@@ -76,7 +76,7 @@ namespace Riptide.Utils
             }
         }
         /// <inheritdoc cref="SetBits(byte, int, byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void SetBits(ushort bitfield, int amount, byte[] array, int startBit)
         {
             ushort mask = (ushort)((1 << amount) - 1);
@@ -99,7 +99,7 @@ namespace Riptide.Utils
             }
         }
         /// <inheritdoc cref="SetBits(byte, int, byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void SetBits(uint bitfield, int amount, byte[] array, int startBit)
         {
             uint mask = (1u << (amount - 1) << 1) - 1; // Perform 2 shifts, doing it in 1 doesn't cause the value to wrap properly
@@ -126,7 +126,7 @@ namespace Riptide.Utils
             }
         }
         /// <inheritdoc cref="SetBits(byte, int, byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void SetBits(ulong bitfield, int amount, byte[] array, int startBit)
         {
             ulong mask = (1ul << (amount - 1) << 1) - 1; // Perform 2 shifts, doing it in 1 doesn't cause the value to wrap properly
@@ -161,7 +161,7 @@ namespace Riptide.Utils
             }
         }
         /// <inheritdoc cref="SetBits(byte, int, byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void SetBits(ulong bitfield, int amount, ulong[] array, int startBit)
         {
             ulong mask = (1ul << (amount - 1) << 1) - 1; // Perform 2 shifts, doing it in 1 doesn't cause the value to wrap properly
@@ -183,56 +183,56 @@ namespace Riptide.Utils
         /// <param name="array">The array to read the bits from.</param>
         /// <param name="startBit">The bit position in the array at which to start reading.</param>
         /// <param name="bitfield">The bitfield into which to write the bits from the array.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void GetBits(int amount, byte[] array, int startBit, out byte bitfield)
         {
             bitfield = ByteFromBits(array, startBit);
             bitfield &= (byte)((1 << amount) - 1); // Discard any bits that are set beyond the ones we're reading
         }
         /// <inheritdoc cref="GetBits(int, byte[], int, out byte)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void GetBits(int amount, byte[] array, int startBit, out ushort bitfield)
         {
             bitfield = UShortFromBits(array, startBit);
             bitfield &= (ushort)((1 << amount) - 1); // Discard any bits that are set beyond the ones we're reading
         }
         /// <inheritdoc cref="GetBits(int, byte[], int, out byte)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void GetBits(int amount, byte[] array, int startBit, out uint bitfield)
         {
             bitfield = UIntFromBits(array, startBit);
             bitfield &= (1u << (amount - 1) << 1) - 1; // Discard any bits that are set beyond the ones we're reading
         }
         /// <inheritdoc cref="GetBits(int, byte[], int, out byte)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void GetBits(int amount, byte[] array, int startBit, out ulong bitfield)
         {
             bitfield = ULongFromBits(array, startBit);
             bitfield &= (1ul << (amount - 1) << 1) - 1; // Discard any bits that are set beyond the ones we're reading
         }
         /// <inheritdoc cref="GetBits(int, byte[], int, out byte)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void GetBits(int amount, ulong[] array, int startBit, out byte bitfield)
         {
             bitfield = ByteFromBits(array, startBit);
             bitfield &= (byte)((1 << amount) - 1); // Discard any bits that are set beyond the ones we're reading
         }
         /// <inheritdoc cref="GetBits(int, byte[], int, out byte)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void GetBits(int amount, ulong[] array, int startBit, out ushort bitfield)
         {
             bitfield = UShortFromBits(array, startBit);
             bitfield &= (ushort)((1 << amount) - 1); // Discard any bits that are set beyond the ones we're reading
         }
         /// <inheritdoc cref="GetBits(int, byte[], int, out byte)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void GetBits(int amount, ulong[] array, int startBit, out uint bitfield)
         {
             bitfield = UIntFromBits(array, startBit);
             bitfield &= (1u << (amount - 1) << 1) - 1; // Discard any bits that are set beyond the ones we're reading
         }
         /// <inheritdoc cref="GetBits(int, byte[], int, out byte)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void GetBits(int amount, ulong[] array, int startBit, out ulong bitfield)
         {
             bitfield = ULongFromBits(array, startBit);
@@ -245,16 +245,16 @@ namespace Riptide.Utils
         /// <param name="value">The <see cref="sbyte"/> to convert.</param>
         /// <param name="array">The array to write the bits into.</param>
         /// <param name="startBit">The position in the array at which to write the bits.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void SByteToBits(sbyte value, byte[] array, int startBit) => ByteToBits((byte)value, array, startBit);
         /// <inheritdoc cref="SByteToBits(sbyte, byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void SByteToBits(sbyte value, ulong[] array, int startBit) => ByteToBits((byte)value, array, startBit);
         /// <summary>Converts <paramref name="value"/> to 8 bits and writes them into <paramref name="array"/> at <paramref name="startBit"/>.</summary>
         /// <param name="value">The <see cref="byte"/> to convert.</param>
         /// <param name="array">The array to write the bits into.</param>
         /// <param name="startBit">The position in the array at which to write the bits.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void ByteToBits(byte value, byte[] array, int startBit)
         {
             int pos = startBit / BitsPerByte;
@@ -268,23 +268,23 @@ namespace Riptide.Utils
             }
         }
         /// <inheritdoc cref="ByteToBits(byte, byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void ByteToBits(byte value, ulong[] array, int startBit) => ToBits(value, BitsPerByte, array, startBit);
 
         /// <summary>Converts the 8 bits at <paramref name="startBit"/> in <paramref name="array"/> to an <see cref="sbyte"/>.</summary>
         /// <param name="array">The array to convert the bits from.</param>
         /// <param name="startBit">The position in the array from which to read the bits.</param>
         /// <returns>The converted <see cref="sbyte"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static sbyte SByteFromBits(byte[] array, int startBit) => (sbyte)ByteFromBits(array, startBit);
         /// <inheritdoc cref="SByteFromBits(byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static sbyte SByteFromBits(ulong[] array, int startBit) => (sbyte)ByteFromBits(array, startBit);
         /// <summary>Converts the 8 bits at <paramref name="startBit"/> in <paramref name="array"/> to a <see cref="byte"/>.</summary>
         /// <param name="array">The array to convert the bits from.</param>
         /// <param name="startBit">The position in the array from which to read the bits.</param>
         /// <returns>The converted <see cref="byte"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static byte ByteFromBits(byte[] array, int startBit)
         {
             int pos = startBit / BitsPerByte;
@@ -297,7 +297,7 @@ namespace Riptide.Utils
             return (byte)(value | (array[pos + 1] << (8 - bit)));
         }
         /// <inheritdoc cref="ByteFromBits(byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static byte ByteFromBits(ulong[] array, int startBit) => (byte)FromBits(BitsPerByte, array, startBit);
         #endregion
 
@@ -306,7 +306,7 @@ namespace Riptide.Utils
         /// <param name="value">The <see cref="bool"/> to convert.</param>
         /// <param name="array">The array to write the bit into.</param>
         /// <param name="startBit">The position in the array at which to write the bit.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void BoolToBit(bool value, byte[] array, int startBit)
         {
             int pos = startBit / BitsPerByte;
@@ -318,7 +318,7 @@ namespace Riptide.Utils
                 array[pos] |= (byte)(1 << bit);
         }
         /// <inheritdoc cref="BoolToBit(bool, byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void BoolToBit(bool value, ulong[] array, int startBit)
         {
             int pos = startBit / BitsPerULong;
@@ -334,7 +334,7 @@ namespace Riptide.Utils
         /// <param name="array">The array to convert the bit from.</param>
         /// <param name="startBit">The position in the array from which to read the bit.</param>
         /// <returns>The converted <see cref="bool"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static bool BoolFromBit(byte[] array, int startBit)
         {
             int pos = startBit / BitsPerByte;
@@ -342,7 +342,7 @@ namespace Riptide.Utils
             return (array[pos] & (1 << bit)) != 0;
         }
         /// <inheritdoc cref="BoolFromBit(byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static bool BoolFromBit(ulong[] array, int startBit)
         {
             int pos = startBit / BitsPerULong;
@@ -356,13 +356,13 @@ namespace Riptide.Utils
         /// <param name="value">The <see cref="short"/> to convert.</param>
         /// <param name="array">The array to write the bytes into.</param>
         /// <param name="startIndex">The position in the array at which to write the bytes.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void FromShort(short value, byte[] array, int startIndex) => FromUShort((ushort)value, array, startIndex);
         /// <summary>Converts a given <see cref="ushort"/> to bytes and writes them into the given array.</summary>
         /// <param name="value">The <see cref="ushort"/> to convert.</param>
         /// <param name="array">The array to write the bytes into.</param>
         /// <param name="startIndex">The position in the array at which to write the bytes.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void FromUShort(ushort value, byte[] array, int startIndex)
         {
 #if BIG_ENDIAN
@@ -378,13 +378,13 @@ namespace Riptide.Utils
         /// <param name="array">The array to read the bytes from.</param>
         /// <param name="startIndex">The position in the array at which to read the bytes.</param>
         /// <returns>The converted <see cref="short"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static short ToShort(byte[] array, int startIndex) => (short)ToUShort(array, startIndex);
         /// <summary>Converts the 2 bytes in the array at <paramref name="startIndex"/> to a <see cref="ushort"/>.</summary>
         /// <param name="array">The array to read the bytes from.</param>
         /// <param name="startIndex">The position in the array at which to read the bytes.</param>
         /// <returns>The converted <see cref="ushort"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static ushort ToUShort(byte[] array, int startIndex)
         {
 #if BIG_ENDIAN
@@ -398,16 +398,16 @@ namespace Riptide.Utils
         /// <param name="value">The <see cref="short"/> to convert.</param>
         /// <param name="array">The array to write the bits into.</param>
         /// <param name="startBit">The position in the array at which to write the bits.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void ShortToBits(short value, byte[] array, int startBit) => UShortToBits((ushort)value, array, startBit);
         /// <inheritdoc cref="ShortToBits(short, byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void ShortToBits(short value, ulong[] array, int startBit) => UShortToBits((ushort)value, array, startBit);
         /// <summary>Converts <paramref name="value"/> to 16 bits and writes them into <paramref name="array"/> at <paramref name="startBit"/>.</summary>
         /// <param name="value">The <see cref="ushort"/> to convert.</param>
         /// <param name="array">The array to write the bits into.</param>
         /// <param name="startBit">The position in the array at which to write the bits.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void UShortToBits(ushort value, byte[] array, int startBit)
         {
             int pos = startBit / BitsPerByte;
@@ -426,23 +426,23 @@ namespace Riptide.Utils
             }
         }
         /// <inheritdoc cref="UShortToBits(ushort, byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void UShortToBits(ushort value, ulong[] array, int startBit) => ToBits(value, sizeof(ushort) * BitsPerByte, array, startBit);
 
         /// <summary>Converts the 16 bits at <paramref name="startBit"/> in <paramref name="array"/> to a <see cref="short"/>.</summary>
         /// <param name="array">The array to convert the bits from.</param>
         /// <param name="startBit">The position in the array from which to read the bits.</param>
         /// <returns>The converted <see cref="short"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static short ShortFromBits(byte[] array, int startBit) => (short)UShortFromBits(array, startBit);
         /// <inheritdoc cref="ShortFromBits(byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static short ShortFromBits(ulong[] array, int startBit) => (short)UShortFromBits(array, startBit);
         /// <summary>Converts the 16 bits at <paramref name="startBit"/> in <paramref name="array"/> to a <see cref="ushort"/>.</summary>
         /// <param name="array">The array to convert the bits from.</param>
         /// <param name="startBit">The position in the array from which to read the bits.</param>
         /// <returns>The converted <see cref="ushort"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static ushort UShortFromBits(byte[] array, int startBit)
         {
             int pos = startBit / BitsPerByte;
@@ -455,7 +455,7 @@ namespace Riptide.Utils
             return (ushort)(value | (array[pos + 2] << (16 - bit)));
         }
         /// <inheritdoc cref="UShortFromBits(byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static ushort UShortFromBits(ulong[] array, int startBit) => (ushort)FromBits(sizeof(ushort) * BitsPerByte, array, startBit);
         #endregion
 
@@ -464,13 +464,13 @@ namespace Riptide.Utils
         /// <param name="value">The <see cref="int"/> to convert.</param>
         /// <param name="array">The array to write the bytes into.</param>
         /// <param name="startIndex">The position in the array at which to write the bytes.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void FromInt(int value, byte[] array, int startIndex) => FromUInt((uint)value, array, startIndex);
         /// <summary>Converts a given <see cref="uint"/> to bytes and writes them into the given array.</summary>
         /// <param name="value">The <see cref="uint"/> to convert.</param>
         /// <param name="array">The array to write the bytes into.</param>
         /// <param name="startIndex">The position in the array at which to write the bytes.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void FromUInt(uint value, byte[] array, int startIndex)
         {
 #if BIG_ENDIAN
@@ -490,13 +490,13 @@ namespace Riptide.Utils
         /// <param name="array">The array to read the bytes from.</param>
         /// <param name="startIndex">The position in the array at which to read the bytes.</param>
         /// <returns>The converted <see cref="int"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static int ToInt(byte[] array, int startIndex) => (int)ToUInt(array, startIndex);
         /// <summary>Converts the 4 bytes in the array at <paramref name="startIndex"/> to a <see cref="uint"/>.</summary>
         /// <param name="array">The array to read the bytes from.</param>
         /// <param name="startIndex">The position in the array at which to read the bytes.</param>
         /// <returns>The converted <see cref="uint"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static uint ToUInt(byte[] array, int startIndex)
         {
 #if BIG_ENDIAN
@@ -510,16 +510,16 @@ namespace Riptide.Utils
         /// <param name="value">The <see cref="int"/> to convert.</param>
         /// <param name="array">The array to write the bits into.</param>
         /// <param name="startBit">The position in the array at which to write the bits.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void IntToBits(int value, byte[] array, int startBit) => UIntToBits((uint)value, array, startBit);
         /// <inheritdoc cref="IntToBits(int, byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void IntToBits(int value, ulong[] array, int startBit) => UIntToBits((uint)value, array, startBit);
         /// <summary>Converts <paramref name="value"/> to 32 bits and writes them into <paramref name="array"/> at <paramref name="startBit"/>.</summary>
         /// <param name="value">The <see cref="uint"/> to convert.</param>
         /// <param name="array">The array to write the bits into.</param>
         /// <param name="startBit">The position in the array at which to write the bits.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void UIntToBits(uint value, byte[] array, int startBit)
         {
             int pos = startBit / BitsPerByte;
@@ -542,23 +542,23 @@ namespace Riptide.Utils
             }
         }
         /// <inheritdoc cref="UIntToBits(uint, byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void UIntToBits(uint value, ulong[] array, int startBit) => ToBits(value, sizeof(uint) * BitsPerByte, array, startBit);
 
         /// <summary>Converts the 32 bits at <paramref name="startBit"/> in <paramref name="array"/> to an <see cref="int"/>.</summary>
         /// <param name="array">The array to convert the bits from.</param>
         /// <param name="startBit">The position in the array from which to read the bits.</param>
         /// <returns>The converted <see cref="int"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static int IntFromBits(byte[] array, int startBit) => (int)UIntFromBits(array, startBit);
         /// <inheritdoc cref="IntFromBits(byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static int IntFromBits(ulong[] array, int startBit) => (int)UIntFromBits(array, startBit);
         /// <summary>Converts the 32 bits at <paramref name="startBit"/> in <paramref name="array"/> to a <see cref="uint"/>.</summary>
         /// <param name="array">The array to convert the bits from.</param>
         /// <param name="startBit">The position in the array from which to read the bits.</param>
         /// <returns>The converted <see cref="uint"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static uint UIntFromBits(byte[] array, int startBit)
         {
             int pos = startBit / BitsPerByte;
@@ -571,7 +571,7 @@ namespace Riptide.Utils
             return value | (uint)(array[pos + 4] << (32 - bit));
         }
         /// <inheritdoc cref="UIntFromBits(byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static uint UIntFromBits(ulong[] array, int startBit) => (uint)FromBits(sizeof(uint) * BitsPerByte, array, startBit);
         #endregion
 
@@ -580,13 +580,13 @@ namespace Riptide.Utils
         /// <param name="value">The <see cref="long"/> to convert.</param>
         /// <param name="array">The array to write the bytes into.</param>
         /// <param name="startIndex">The position in the array at which to write the bytes.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void FromLong(long value, byte[] array, int startIndex) => FromULong((ulong)value, array, startIndex);
         /// <summary>Converts a given <see cref="ulong"/> to bytes and writes them into the given array.</summary>
         /// <param name="value">The <see cref="ulong"/> to convert.</param>
         /// <param name="array">The array to write the bytes into.</param>
         /// <param name="startIndex">The position in the array at which to write the bytes.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void FromULong(ulong value, byte[] array, int startIndex)
         {
 #if BIG_ENDIAN
@@ -614,7 +614,7 @@ namespace Riptide.Utils
         /// <param name="array">The array to read the bytes from.</param>
         /// <param name="startIndex">The position in the array at which to read the bytes.</param>
         /// <returns>The converted <see cref="long"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static long ToLong(byte[] array, int startIndex)
         {
 #if BIG_ENDIAN
@@ -626,7 +626,7 @@ namespace Riptide.Utils
         /// <param name="array">The array to read the bytes from.</param>
         /// <param name="startIndex">The position in the array at which to read the bytes.</param>
         /// <returns>The converted <see cref="ulong"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static ulong ToULong(byte[] array, int startIndex)
         {
 #if BIG_ENDIAN
@@ -639,16 +639,16 @@ namespace Riptide.Utils
         /// <param name="value">The <see cref="long"/> to convert.</param>
         /// <param name="array">The array to write the bits into.</param>
         /// <param name="startBit">The position in the array at which to write the bits.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void LongToBits(long value, byte[] array, int startBit) => ULongToBits((ulong)value, array, startBit);
         /// <inheritdoc cref="LongToBits(long, byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void LongToBits(long value, ulong[] array, int startBit) => ULongToBits((ulong)value, array, startBit);
         /// <summary>Converts <paramref name="value"/> to 64 bits and writes them into <paramref name="array"/> at <paramref name="startBit"/>.</summary>
         /// <param name="value">The <see cref="ulong"/> to convert.</param>
         /// <param name="array">The array to write the bits into.</param>
         /// <param name="startBit">The position in the array at which to write the bits.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void ULongToBits(ulong value, byte[] array, int startBit)
         {
             int pos = startBit / BitsPerByte;
@@ -679,7 +679,7 @@ namespace Riptide.Utils
             }
         }
         /// <inheritdoc cref="ULongToBits(ulong, byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void ULongToBits(ulong value, ulong[] array, int startBit)
         {
             int pos = startBit / BitsPerULong;
@@ -697,16 +697,16 @@ namespace Riptide.Utils
         /// <param name="array">The array to convert the bits from.</param>
         /// <param name="startBit">The position in the array from which to read the bits.</param>
         /// <returns>The converted <see cref="long"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static long LongFromBits(byte[] array, int startBit) => (long)ULongFromBits(array, startBit);
         /// <inheritdoc cref="LongFromBits(byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static long LongFromBits(ulong[] array, int startBit) => (long)ULongFromBits(array, startBit);
         /// <summary>Converts the 64 bits at <paramref name="startBit"/> in <paramref name="array"/> to a <see cref="ulong"/>.</summary>
         /// <param name="array">The array to convert the bits from.</param>
         /// <param name="startBit">The position in the array from which to read the bits.</param>
         /// <returns>The converted <see cref="ulong"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static ulong ULongFromBits(byte[] array, int startBit)
         {
             int pos = startBit / BitsPerByte;
@@ -719,7 +719,7 @@ namespace Riptide.Utils
             return value | ((ulong)array[pos + 8] << (64 - bit));
         }
         /// <inheritdoc cref="ULongFromBits(byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static ulong ULongFromBits(ulong[] array, int startBit)
         {
             int pos = startBit / BitsPerULong;
@@ -738,7 +738,7 @@ namespace Riptide.Utils
         /// <param name="valueSize">The size in bits of the value being converted.</param>
         /// <param name="array">The array to write the bits into.</param>
         /// <param name="startBit">The position in the array at which to write the bits.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         private static void ToBits(ulong value, int valueSize, ulong[] array, int startBit)
         {
             int pos = startBit / BitsPerULong;
@@ -759,7 +759,7 @@ namespace Riptide.Utils
         /// <param name="array">The array to convert the bits from.</param>
         /// <param name="startBit">The position in the array from which to read the bits.</param>
         /// <returns>The converted <see cref="ulong"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         private static ulong FromBits(int valueSize, ulong[] array, int startBit)
         {
             int pos = startBit / BitsPerULong;
@@ -781,7 +781,7 @@ namespace Riptide.Utils
         /// <param name="value">The <see cref="float"/> to convert.</param>
         /// <param name="array">The array to write the bytes into.</param>
         /// <param name="startIndex">The position in the array at which to write the bytes.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void FromFloat(float value, byte[] array, int startIndex)
         {
             FloatConverter converter = new FloatConverter { FloatValue = value };
@@ -802,7 +802,7 @@ namespace Riptide.Utils
         /// <param name="array">The array to read the bytes from.</param>
         /// <param name="startIndex">The position in the array at which to read the bytes.</param>
         /// <returns>The converted <see cref="float"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static float ToFloat(byte[] array, int startIndex)
         {
 #if BIG_ENDIAN
@@ -816,13 +816,13 @@ namespace Riptide.Utils
         /// <param name="value">The <see cref="float"/> to convert.</param>
         /// <param name="array">The array to write the bits into.</param>
         /// <param name="startBit">The position in the array at which to write the bits.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void FloatToBits(float value, byte[] array, int startBit)
         {
             UIntToBits(new FloatConverter { FloatValue = value }.UIntValue, array, startBit);
         }
         /// <inheritdoc cref="FloatToBits(float, byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void FloatToBits(float value, ulong[] array, int startBit)
         {
             UIntToBits(new FloatConverter { FloatValue = value }.UIntValue, array, startBit);
@@ -832,13 +832,13 @@ namespace Riptide.Utils
         /// <param name="array">The array to convert the bits from.</param>
         /// <param name="startBit">The position in the array from which to read the bits.</param>
         /// <returns>The converted <see cref="float"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static float FloatFromBits(byte[] array, int startBit)
         {
             return new FloatConverter { UIntValue = UIntFromBits(array, startBit) }.FloatValue;
         }
         /// <inheritdoc cref="FloatFromBits(byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static float FloatFromBits(ulong[] array, int startBit)
         {
             return new FloatConverter { UIntValue = UIntFromBits(array, startBit) }.FloatValue;
@@ -850,7 +850,7 @@ namespace Riptide.Utils
         /// <param name="value">The <see cref="double"/> to convert.</param>
         /// <param name="array">The array to write the bytes into.</param>
         /// <param name="startIndex">The position in the array at which to write the bytes.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void FromDouble(double value, byte[] array, int startIndex)
         {
             DoubleConverter converter = new DoubleConverter { DoubleValue = value };
@@ -879,7 +879,7 @@ namespace Riptide.Utils
         /// <param name="array">The array to read the bytes from.</param>
         /// <param name="startIndex">The position in the array at which to read the bytes.</param>
         /// <returns>The converted <see cref="double"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static double ToDouble(byte[] array, int startIndex)
         {
 #if BIG_ENDIAN
@@ -892,13 +892,13 @@ namespace Riptide.Utils
         /// <param name="value">The <see cref="double"/> to convert.</param>
         /// <param name="array">The array to write the bits into.</param>
         /// <param name="startBit">The position in the array at which to write the bits.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void DoubleToBits(double value, byte[] array, int startBit)
         {
             ULongToBits(new DoubleConverter { DoubleValue = value }.ULongValue, array, startBit);
         }
         /// <inheritdoc cref="DoubleToBits(double, byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static void DoubleToBits(double value, ulong[] array, int startBit)
         {
             ULongToBits(new DoubleConverter { DoubleValue = value }.ULongValue, array, startBit);
@@ -908,13 +908,13 @@ namespace Riptide.Utils
         /// <param name="array">The array to convert the bits from.</param>
         /// <param name="startBit">The position in the array from which to read the bits.</param>
         /// <returns>The converted <see cref="double"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static double DoubleFromBits(byte[] array, int startBit)
         {
             return new DoubleConverter { ULongValue = ULongFromBits(array, startBit) }.DoubleValue;
         }
         /// <inheritdoc cref="DoubleFromBits(byte[], int)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)] // KK91: not a thing in Framework 3.5 unfortunately
         public static double DoubleFromBits(ulong[] array, int startBit)
         {
             return new DoubleConverter { ULongValue = ULongFromBits(array, startBit) }.DoubleValue;
