@@ -51,7 +51,9 @@ namespace Riptide.Transports.Udp
 
             OpenSocket();
 
-            connection = udpConnection = new UdpConnection(new IPEndPoint(mode == SocketMode.IPv4Only ? ip : ip.MapToIPv6(), port), this);
+            //connection = udpConnection = new UdpConnection(new IPEndPoint(mode == SocketMode.IPv4Only ? ip : ip.MapToIPv6(), port), this);
+            connection = udpConnection = new UdpConnection(new IPEndPoint(ip, port), this); // KK91: Framework 3.5 has no MapToIPv6()
+
             OnConnected(); // UDP is connectionless, so from the transport POV everything is immediately ready to send/receive data
             return true;
         }
@@ -69,12 +71,15 @@ namespace Riptide.Transports.Udp
             if (ipAndPort.Length > 2)
             {
                 // There was more than one ':' in the host address, might be IPv6
-                ipString = string.Join(":", ipAndPort.Take(ipAndPort.Length - 1));
+
+                // ipString = string.Join(":", ipAndPort.Take(ipAndPort.Length - 1));
+                ipString = string.Join(":", ipAndPort.Take(ipAndPort.Length - 1).ToArray()); // KK91: framework 3.5 needs it to be converted to an array
                 portString = ipAndPort[ipAndPort.Length - 1];
             }
             else if (ipAndPort.Length == 2)
             {
                 // IPv4
+
                 ipString = ipAndPort[0];
                 portString = ipAndPort[1];
             }

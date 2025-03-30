@@ -35,7 +35,7 @@ namespace Riptide.Transports.Tcp
             }
 
             IPEndPoint remoteEndPoint = new IPEndPoint(ip, port);
-            socket = new Socket(SocketType.Stream, ProtocolType.Tcp)
+            socket = new Socket(ip.AddressFamily, SocketType.Stream, ProtocolType.Tcp)
             {
                 SendBufferSize = socketBufferSize,
                 ReceiveBufferSize = socketBufferSize,
@@ -62,6 +62,7 @@ namespace Riptide.Transports.Tcp
         /// <param name="hostAddress">The host address to parse.</param>
         /// <param name="ip">The retrieved IP.</param>
         /// <param name="port">The retrieved port.</param>
+        /// <param name="addressFamily">Returns InterNetwork for IPV4, InterNetworkV6 for IPV6.</param>
         /// <returns>Whether or not <paramref name="hostAddress"/> was in a valid format.</returns>
         private bool ParseHostAddress(string hostAddress, out IPAddress ip, out ushort port)
         {
@@ -71,12 +72,15 @@ namespace Riptide.Transports.Tcp
             if (ipAndPort.Length > 2)
             {
                 // There was more than one ':' in the host address, might be IPv6
-                ipString = string.Join(":", ipAndPort.Take(ipAndPort.Length - 1));
+
+                // ipString = string.Join(":", ipAndPort.Take(ipAndPort.Length - 1));
+                ipString = string.Join(":", ipAndPort.Take(ipAndPort.Length - 1).ToArray()); // KK91: framework 3.5 needs it to be converted to an array
                 portString = ipAndPort[ipAndPort.Length - 1];
             }
             else if (ipAndPort.Length == 2)
             {
                 // IPv4
+
                 ipString = ipAndPort[0];
                 portString = ipAndPort[1];
             }
