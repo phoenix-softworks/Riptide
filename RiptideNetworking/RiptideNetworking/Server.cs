@@ -147,7 +147,9 @@ namespace Riptide
             messageHandlers = new Dictionary<ushort, MessageHandler>(methods.Length);
             foreach (MethodInfo method in methods)
             {
-                MessageHandlerAttribute attribute = method.GetCustomAttribute<MessageHandlerAttribute>();
+                // MessageHandlerAttribute attribute = method.GetCustomAttribute<MessageHandlerAttribute>(); // KK91: not a thing in fw3.5
+                MessageHandlerAttribute attribute = Attribute.GetCustomAttribute(method, typeof(MessageHandlerAttribute)) as MessageHandlerAttribute;
+
                 if (attribute.GroupId != messageHandlerGroupId)
                     continue;
 
@@ -160,7 +162,7 @@ namespace Riptide
                     // It's a message handler for Server instances
                     if (messageHandlers.ContainsKey(attribute.MessageId))
                     {
-                        MethodInfo otherMethodWithId = messageHandlers[attribute.MessageId].GetMethodInfo();
+                        MethodInfo otherMethodWithId = messageHandlers[attribute.MessageId].Method; // .GetMethodInfo()
                         throw new DuplicateHandlerException(attribute.MessageId, method, otherMethodWithId);
                     }
                     else
