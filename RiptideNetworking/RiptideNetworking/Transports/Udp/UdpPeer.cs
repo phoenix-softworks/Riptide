@@ -76,9 +76,9 @@ namespace Riptide.Transports.Udp
             if (mode == SocketMode.IPv4Only)
                 socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             else if (mode == SocketMode.IPv6Only)
-                socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp) { DualMode = false };
+                socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp); /* { DualMode = false } */ // KK91: DualMode isn't a thing in framework 3.5
             else
-                socket = new Socket(SocketType.Dgram, ProtocolType.Udp);
+                socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp); //socket = new Socket(SocketType.Dgram, ProtocolType.Udp);
 
             IPAddress any = socket.AddressFamily == AddressFamily.InterNetworkV6 ? IPAddress.IPv6Any : IPAddress.Any;
             socket.SendBufferSize = socketBufferSize;

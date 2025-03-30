@@ -60,7 +60,7 @@ namespace Riptide.Transports.Tcp
                 StopListening();
 
             IPEndPoint localEndPoint = new IPEndPoint(listenAddress, port);
-            socket = new Socket(SocketType.Stream, ProtocolType.Tcp)
+            socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
             {
                 SendBufferSize = socketBufferSize,
                 ReceiveBufferSize = socketBufferSize,
