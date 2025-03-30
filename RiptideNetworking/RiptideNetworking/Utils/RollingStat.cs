@@ -84,10 +84,15 @@ namespace Riptide.Utils
         /// <inheritdoc/>
         public override string ToString()
         {
+            return "TODO: needs fixing! tell KptKosmit91";
+
+
+            /*
             if (slotsFilled == array.Length)
                 return string.Join(",", array);
 
             return string.Join(",", array.Take(slotsFilled));
+            */
         }
     }
 }
