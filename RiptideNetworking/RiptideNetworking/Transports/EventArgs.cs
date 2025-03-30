@@ -6,7 +6,7 @@
 namespace Riptide.Transports
 {
     /// <summary>Contains event data for when a server's transport successfully establishes a connection to a client.</summary>
-    public class ConnectedEventArgs
+    public class ConnectedEventArgs : System.EventArgs
     {
         /// <summary>The newly established connection.</summary>
         public readonly Connection Connection;
@@ -20,7 +20,7 @@ namespace Riptide.Transports
     }
 
     /// <summary>Contains event data for when a server's or client's transport receives data.</summary>
-    public class DataReceivedEventArgs
+    public class DataReceivedEventArgs : System.EventArgs
     {
         /// <summary>An array containing the received data.</summary>
         public readonly byte[] DataBuffer;
@@ -42,7 +42,7 @@ namespace Riptide.Transports
     }
 
     /// <summary>Contains event data for when a server's or client's transport initiates or detects a disconnection.</summary>
-    public class DisconnectedEventArgs
+    public class DisconnectedEventArgs : System.EventArgs
     {
         /// <summary>The closed connection.</summary>
         public readonly Connection Connection;
