@@ -7,6 +7,7 @@ using Riptide.Transports;
 using Riptide.Utils;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Reflection;
 
 namespace Riptide
@@ -207,6 +208,8 @@ namespace Riptide
                 {
                     Send(connectMessage, false);
                     connectionAttempts++;
+
+                    RiptideLogger.Log(LogType.Info, LogName, $"Connecting to server. Attempt {connectionAttempts} of {maxConnectionAttempts}");
                 }
                 else
                     LocalDisconnect(DisconnectReason.NeverConnected);
@@ -371,7 +374,7 @@ namespace Riptide
         {
             connectMessage.Release();
             connectMessage = null;
-            RiptideLogger.Log(LogType.Info, LogName, $"Connection to server failed: {Helper.GetReasonString(reason)}.");
+            RiptideLogger.Log(LogType.Info, LogName, $"Connection to server failed: {Helper.GetReasonString(reason)} after {maxConnectionAttempts} attempts.");
             ConnectionFailed?.Invoke(this, new ConnectionFailedEventArgs(reason, message));
         }
 
