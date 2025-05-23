@@ -41,7 +41,11 @@ namespace Riptide
             set
             {
                 defaultTimeout = value;
-                connection.TimeoutTime = defaultTimeout;
+
+                if (connection != null)
+                {
+                    connection.TimeoutTime = defaultTimeout;
+                }
             }
         }
         /// <summary>Whether or not the client is currently <i>not</i> trying to connect, pending, nor actively connected.</summary>
