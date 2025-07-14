@@ -275,7 +275,10 @@ namespace Riptide
             {
                 sendAttemptsViolations++;
                 if (sendAttemptsViolations >= AvgSendAttemptsResilience)
+                {
+                    RiptideLogger.Log(LogType.Info, Peer.LogName, $"[Reliable Message] Nubmer of consecutive send failures exceeded resilience of {AvgSendAttemptsResilience}! Disconnecting...");
                     Peer.Disconnect(this, DisconnectReason.PoorConnection);
+                }
             }
             else
                 sendAttemptsViolations = 0;
@@ -288,7 +291,10 @@ namespace Riptide
             {
                 lossRateViolations++;
                 if (lossRateViolations >= NotifyLossResilience)
+                {
+                    RiptideLogger.Log(LogType.Info, Peer.LogName, $" [Notify Message] Number of consecutive send failures exceeded resilience of {NotifyLossResilience}! Disconnecting...");
                     Peer.Disconnect(this, DisconnectReason.PoorConnection);
+                }
             }
             else
                 lossRateViolations = 0;
