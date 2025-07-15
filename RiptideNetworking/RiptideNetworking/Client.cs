@@ -41,7 +41,6 @@ namespace Riptide
             set
             {
                 defaultTimeout = value;
-
                 if (connection != null)
                 {
                     connection.TimeoutTime = defaultTimeout;
