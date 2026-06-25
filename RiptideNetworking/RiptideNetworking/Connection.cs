@@ -92,6 +92,9 @@ namespace Riptide
         /// <summary>How many consecutive times <see cref="MaxNotifyLoss"/> can be exceeded before triggering a disconnect.</summary>
         public int NotifyLossResilience;
 
+        /// <summary>Dictionary for storing custom data related to this connection.</summary>
+        public readonly Dictionary<string, object> CustomData = new Dictionary<string, object>();
+
         /// <summary>The local peer this connection is associated with.</summary>
         internal Peer Peer { get; private set; }
         /// <summary>Whether or not the connection has timed out.</summary>
