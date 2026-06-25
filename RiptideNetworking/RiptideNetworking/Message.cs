@@ -173,18 +173,25 @@ namespace Riptide
         {
             if (Peer.ActiveCount == 0)
             {
-                // No Servers or Clients are running, empty the list and reset the capacity
-                pool.Clear();
-                pool.Capacity = InstancesPerPeer * 2; // x2 so there's some buffer room for extra Message instances in the event that more are needed
+                lock (pool)
+                {
+                    // No Servers or Clients are running, empty the list and reset the capacity
+                    pool.Clear();
+                    pool.Capacity = InstancesPerPeer * 2; // x2 so there's some buffer room for extra Message instances in the event that more are needed
+                }
             }
             else
             {
                 // Reset the pool capacity and number of Message instances in the pool to what is appropriate for how many Servers & Clients are active
                 int idealInstanceAmount = Peer.ActiveCount * InstancesPerPeer;
-                if (pool.Count > idealInstanceAmount)
+
+                lock (pool)
                 {
-                    pool.RemoveRange(Peer.ActiveCount * InstancesPerPeer, pool.Count - idealInstanceAmount);
-                    pool.Capacity = idealInstanceAmount * 2;
+                    if (pool.Count > idealInstanceAmount)
+                    {
+                        pool.RemoveRange(Peer.ActiveCount * InstancesPerPeer, pool.Count - idealInstanceAmount);
+                        pool.Capacity = idealInstanceAmount * 2;
+                    }
                 }
             }
         }
@@ -193,26 +200,32 @@ namespace Riptide
         /// <returns>A message instance ready to be used for sending or handling.</returns>
         private static Message RetrieveFromPool()
         {
-            Message message;
-            if (pool.Count > 0)
+            lock (pool)
             {
-                message = pool[0];
-                pool.RemoveAt(0);
-            }
-            else
-                message = new Message();
+                Message message;
+                if (pool.Count > 0)
+                {
+                    message = pool[0];
+                    pool.RemoveAt(0);
 
-            return message;
+                    return message;
+                }
+            }
+
+            return new Message();
         }
 
         /// <summary>Returns the message instance to the internal pool so it can be reused.</summary>
         public void Release()
         {
-            if (pool.Count < pool.Capacity)
-            {
-                // Pool exists and there's room
-                if (!pool.Contains(this))
-                    pool.Add(this); // Only add it if it's not already in the list, otherwise this method being called twice in a row for whatever reason could cause *serious* issues
+            lock (pool)
+            { 
+                if (pool.Count < pool.Capacity)
+                {
+                    // Pool exists and there's room
+                    if (!pool.Contains(this))
+                        pool.Add(this); // Only add it if it's not already in the list, otherwise this method being called twice in a row for whatever reason could cause *serious* issues
+                }
             }
         }
         #endregion
